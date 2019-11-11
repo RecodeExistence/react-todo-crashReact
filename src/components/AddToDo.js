@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
-export class Addtodo extends Component {
+export class AddToDo extends Component {
     state = {
         title: ''
     }
 
     onSubmit = (e) => {
         e.preventDefault(); 
-        this.props.addToDo(this.state.title);
+        this.props.addTodo(this.state.title);
         this.setState({title: ''})
     }
 
@@ -36,5 +37,8 @@ export class Addtodo extends Component {
         )
     }
 }
+AddToDo.propTypes = {
+    addTodo: PropTypes.func.isRequired
+}
 
-export default Addtodo; 
+export default AddToDo; 
