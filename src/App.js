@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
 import Addtodo from './components/AddToDo';
+import About from './components/pages/About';
+import uuid from 'uuid';
 
 import TodoItem from './components/TodoItem';
 
@@ -20,14 +23,14 @@ class App extends Component {
       {
         id: 2, 
         title: 'Walk the dog.',
-        completed: true
+        completed: false
       }, 
       {
         id: 3, 
         title: 'Code some!',
         completed: false
       }
-    ], 
+    ],
   }
 
   // Toggle Complete 
@@ -47,14 +50,37 @@ class App extends Component {
     ]});
   }
 
+  //Add ToDo 
+  addToDo = (title) => {
+    const newTodo = {
+      id: 4, 
+      title, 
+      completed: false
+    }
+    this.setState({ todos: [...this.state.todos, newTodo]})
+  }
+
   render() {
+
     return (
+      <Router> 
       <div className = "App">
+        <div className = 'container'>
         <Header />
-        <Todos todos = {this.state.todos} markComplete = {this.markComplete}
+        <Route exact path = "/" render ={props => (
+          <React.Fragment>
+            
+        <Addtodo addToDo = {this.addToDo}/>
+        <Todos todos = {this.state.todos}
+         markComplete = {this.markComplete}
         delTodo = {this.delTodo} />
-        <Addtodo />
+          </React.Fragment>
+        )} />
+        
+        <Route path = "/about" component = {About} />
+        </div>
       </div>
+      </Router>
     );
   }
 }
